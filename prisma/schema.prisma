@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Data {
+  id                    Int     @id @default(autoincrement())
+  session_order_id      String
+  round_in_session      Int
+  user_message          String
+  agent_message         String
+  doctor_message        String
+  consultation_status   Int
+  disease_predictions   Json
+  consultation_elements Json
+  rag_retrieval         Json
+  end_tag               Boolean
+  status_code           Int
+  error_msg             String?
+
+  @@unique([session_order_id,round_in_session])
+}
